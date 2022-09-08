@@ -83,12 +83,6 @@ app.post("/new-movie", (req, res) => {
 	//We'll use req.body to get the body payload from the post request that contains our new movie
 	console.log("req.body ", req.body)
 
-	// const newMovie = {
-	// 	title: req.body.title,
-	// 	starRating: req.body.starRating,
-	// 	isRecommended: req.body.isRecommended
-	// }
-
 	const newMovie = {
 		title: "",
 		starRating: 0,
@@ -170,8 +164,35 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
 	console.log("req params ", req.params)
 
 	const titleToUpdate = req.params.titleToUpdate
-	const newTitle = req.body.newTitle
+
+	// We need to find the original movie in our movie array so that we can keep the original values that we don't want to modify. Hint: We need to use .findIndex()
+	const originalMovie = favoriteMovieList.findIndex()
+
+	const updatedMovie = {
+		title: originalMovie.title,
+		starRating: 0,
+		isRecommended: false,
+		
+		lastModified: new Date()
+	}
+
+	if (req.body.title) {
+		updatedMovie.title = req.body.title
+	}
+
+	if (req.body.starRating) {
+		updatedMovie.starRating = req.body.starRating
+	}
+
+	if (req.body.isRecommended) {
+		updatedMovie.isRecommended = req.body.isRecommended
+	}
+
 	
+	return;
+
+
+
 	console.log(titleToUpdate)
 	console.log(newTitle)
 
