@@ -152,6 +152,25 @@ app.get("/all-movies", (req, res) => {
 	res.json(favoriteMovieList)
 })
 
+app.get("/single-movie/:titleToFind", (req, res) => {
+	const titleToFind = req.params.titleToFind
+
+	const foundMovieIndex = favoriteMovieList.findIndex((movie)=>{
+
+		if (movie.title === titleToFind) {
+			console.log("Movie Titles Match!")
+			return true
+		} else {
+			console.log("Movie Titles Do Not Match")
+			return false
+		}
+	})
+
+	const foundMovie = favoriteMovieList[foundMovieIndex];
+
+	res.json(foundMovie)
+})
+
 // Update
 
 // Find a movie and update the title
