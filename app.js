@@ -81,14 +81,68 @@ app.post("/new-movie", (req, res) => {
 	console.log("POST to /new-movie")
 
 	//We'll use req.body to get the body payload from the post request that contains our new movie
-	console.log(req.body)
+	console.log("req.body ", req.body)
 
-	const newMovieTitle = req.body.title
-	favoriteMovieList.push(newMovieTitle)
+	// const newMovie = {
+	// 	title: req.body.title,
+	// 	starRating: req.body.starRating,
+	// 	isRecommended: req.body.isRecommended
+	// }
+
+	const newMovie = {
+		title: "",
+		starRating: 0,
+		isRecommended: false,
+		createdAt: new Date(),
+		lastModified: new Date()
+	}
+	
+	if (req.body.title === undefined) {
+		// Should trigger when req.body.title is undefined
+		console.log("title is not defined")
+		res.json({
+			success: false,
+			message: "title is a required field"
+		})
+		return;
+	} else {
+		console.log("title is defined")
+		newMovie.title = req.body.title
+	}
+
+	if (req.body.starRating === undefined) {
+		// Should trigger when req.body.starRating is undefined
+		console.log("starRating is not defined")
+		res.json({
+			success: false,
+			message: "starRating is a required field"
+		})
+		return;
+	} else {
+		console.log("starRating is defined")
+		newMovie.starRating = req.body.starRating
+	}
+
+	if (req.body.isRecommended === undefined) {
+		// Should trigger when req.body.isRecommended is undefined
+		console.log("isRecommended is not defined")
+		res.json({
+			success: false,
+			message: "isRecommended is a required field"
+		})
+		return;
+	} else {
+		console.log("isRecommended is defined")
+		newMovie.isRecommended = req.body.isRecommended
+	}
+
+	console.log("newMovie ", newMovie)
+	
+	favoriteMovieList.push(newMovie)
 
 	// We must respond to the request, so for now we'll send back a hardcoded object
 	res.json({
-		// success: true
+		success: true
 	})
 })
 
