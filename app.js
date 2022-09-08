@@ -166,45 +166,53 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
 	const titleToUpdate = req.params.titleToUpdate
 
 	// We need to find the original movie in our movie array so that we can keep the original values that we don't want to modify. Hint: We need to use .findIndex()
-	const originalMovie = favoriteMovieList.findIndex()
+	const originalMovieIndex = favoriteMovieList.findIndex((movie)=>{
+		console.log("movie ", movie)
+		console.log("titleToUpdate ", req.params.titleToUpdate)
+		console.log("condition ", movie.title === req.params.titleToUpdate)
+
+		if (movie.title === req.params.titleToUpdate) {
+			console.log("Movie Titles Match!")
+			return true
+		} else {
+			console.log("Movie Titles Do Not Match")
+			return false
+		}
+	})
+
+	console.log("originalMovieIndex ", originalMovieIndex)
+
+	const originalMovie = favoriteMovieList[originalMovieIndex];
+
+	console.log("originalMovie ", originalMovie)
 
 	const updatedMovie = {
 		title: originalMovie.title,
-		starRating: 0,
-		isRecommended: false,
-		
+		starRating: originalMovie.starRating,
+		isRecommended: originalMovie.isRecommended,
+		createdAt: originalMovie.createdAt,
 		lastModified: new Date()
 	}
 
-	if (req.body.title) {
+	console.log("updatedMovie Before Update ", updatedMovie)
+
+	if (req.body.title !== undefined) {
 		updatedMovie.title = req.body.title
 	}
 
-	if (req.body.starRating) {
+	if (req.body.starRating !== undefined) {
 		updatedMovie.starRating = req.body.starRating
 	}
 
-	if (req.body.isRecommended) {
+	if (req.body.isRecommended !== undefined) {
 		updatedMovie.isRecommended = req.body.isRecommended
 	}
 
-	
-	return;
-
-
-
-	console.log(titleToUpdate)
-	console.log(newTitle)
-
-	console.log("favoriteMovieList before ", favoriteMovieList)
-
-	// In order to update the movie title we're targeting, first we find the index of the movie title in the array
-	const indexOfMovie = favoriteMovieList.indexOf(titleToUpdate)
-	console.log(indexOfMovie)
+	console.log("updatedMovie After Update ", updatedMovie)
 
 	// Overwrite the value of favoriteMovieList at indexOfMovie with newTitle
-	favoriteMovieList[indexOfMovie] = newTitle
-	console.log(favoriteMovieList)
+	// favoriteMovieList[indexOfMovie] = newTitle
+	favoriteMovieList[originalMovieIndex] = updatedMovie;
 
 	console.log("favoriteMovieList after ", favoriteMovieList)
 
