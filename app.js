@@ -59,12 +59,27 @@ app.get("/show-user-info", (req, res) => {
 // Movie CRUD Functions
 
 // For the assignment, make sure favoriteMovieList is in the global scope
-const favoriteMovieList = ["Star Wars", "The Avengers"];
+const favoriteMovieList = [{
+	title: "Star Wars",
+	starRating: 5,
+	isRecommended: true,
+	createdAt: new Date(),
+	lastModified: new Date()
+}, {
+	title: "The Avengers",
+	starRating: 4,
+	isRecommended: true,
+	createdAt: new Date(),
+	lastModified: new Date()
+}];
 
 // Create
 
 // Post a new movie into the movies array
 app.post("/new-movie", (req, res) => {
+
+	console.log("POST to /new-movie")
+
 	//We'll use req.body to get the body payload from the post request that contains our new movie
 	console.log(req.body)
 
@@ -81,6 +96,9 @@ app.post("/new-movie", (req, res) => {
 
 // Get all the movies in our movie list
 app.get("/all-movies", (req, res) => {
+
+	console.log("GET to /all-movies")
+
 	//res.send only sends strings. From now on, we want to use res.json to send JSON objects or JS arrays
 
 	res.json(favoriteMovieList)
@@ -90,6 +108,9 @@ app.get("/all-movies", (req, res) => {
 
 // Find a movie and update the title
 app.put("/update-movie/:titleToUpdate", (req, res) => {
+
+	console.log("PUT to /update-movie")
+
 	// We have a route parameter /:titleToUpdate to specify which movie in our list to update
 	// The value of this route parameter will come through the req.params object
 	console.log("req params ", req.params)
@@ -120,6 +141,8 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
 // Delete
 
 app.delete("/delete-movie/:titleToDelete", (req, res)=>{
+
+	console.log("DELETE to /delete-movie")
 
 	// This is the title of the movie we want to find in the movies array and delete
 	const titleToDelete = req.params.titleToDelete
